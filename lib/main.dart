@@ -1,32 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/bloc/news/news_bloc.dart';
+import 'package:news_app/cubit/theme_cubit.dart';
 import 'package:news_app/injector.dart';
 import 'package:news_app/screen/home_page.dart';
+import 'package:news_app/theme.dart';
 
-void main() {
+void main() async {
   setupInjector();
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  final initialTheme = await ThemeCubit.getInitialThemeMode();
+
+  runApp(MyApp(
+    themeMode: initialTheme,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final ThemeMode themeMode;
+  const MyApp({required this.themeMode, super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => NewsBloc()..add(NewsLoad()),
-          )
-        ],
-        child: MaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
+            create: (context) => ThemeCubit(themeMode),
           ),
-          home: const HomePage(),
+          BlocProvider(
+            create: (context) => NewsBloc()..add(NewsLoad()),
+          ),
+        ],
+        child: BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (context, state) {
+            return MaterialApp(
+              title: 'Flutter Demo',
+              themeMode: state.themeMode,
+              darkTheme: darkTheme,
+              theme: lightTheme,
+              home: const HomePage(),
+            );
+          },
         ));
   }
 }
