@@ -5,20 +5,23 @@ class Arthicle {
   final String title;
   final String imageUrl;
   final String source;
+  final String sourceUrl;
   final String date;
   Arthicle({
     required this.title,
     required this.imageUrl,
     required this.source,
+    required this.sourceUrl,
     required this.date,
   });
 
   factory Arthicle.fromMap(Map<String, dynamic> map) {
     return Arthicle(
       title: map['title'] as String,
-      imageUrl: map['urlToImage'] as String,
-      source: map['author'] as String,
-      date: map['publishedAt'] as String,
+      imageUrl: map['imageUrl'] as String,
+      source: map['source'] as String,
+      sourceUrl: map['sourceUrl'] as String,
+      date: map['date'] as String,
     );
   }
 
