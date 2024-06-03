@@ -5,7 +5,8 @@ import 'package:news_app/cubit/theme_cubit.dart';
 import 'package:news_app/screen/widgets/article_card.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+  final _serachTextFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +35,35 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(60),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: TextFormField(
+              controller: _serachTextFieldController,
+              decoration: InputDecoration(
+                  suffix: IconButton(
+                      onPressed: () {
+                        context.read<NewsBloc>().add(NewsSearch(
+                            queryText: _serachTextFieldController.text));
+                      },
+                      icon: Icon(Icons.search)),
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 3, horizontal: 16),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(width: 0.2)),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(width: 0.2)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(width: 0.2)),
+                  hintText: "Search news...",
+                  hintStyle: TextStyle(fontWeight: FontWeight.w300)),
+            ),
+          ),
+        ),
       ),
       body: BlocBuilder<NewsBloc, NewsState>(
         builder: (context, state) {
