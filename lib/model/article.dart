@@ -15,16 +15,13 @@ class Article {
     required this.date,
   });
 
-  factory Article.fromMap(Map<String, dynamic> map) {
+  factory Article.fromJson(Map<String, dynamic> json) {
     return Article(
-      title: map['title'] as String,
-      imageUrl: map['imageUrl'] as String,
-      source: map['source'] as String,
-      sourceUrl: map['sourceUrl'] as String,
-      date: map['date'] as String,
+      title: json['title'] as String,
+      imageUrl: json['urlToImage'] as String,
+      source: json['author'] as String,
+      sourceUrl: json['url'] as String,
+      date: json['publishedAt'] as String,
     );
   }
-
-  factory Article.fromJson(String source) =>
-      Article.fromMap(json.decode(source) as Map<String, dynamic>);
 }
