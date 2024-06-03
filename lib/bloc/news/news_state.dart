@@ -11,9 +11,9 @@ class NewsLoading extends NewsState {
   List<Object?> get props => [];
 }
 
-class NewsLoadedSuccess extends NewsState {
+class NewsLoadSuccess extends NewsState {
   final List<Article> articles;
-  NewsLoadedSuccess({
+  NewsLoadSuccess({
     required this.articles,
   });
   @override
