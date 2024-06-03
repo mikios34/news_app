@@ -9,4 +9,8 @@ class NewsRepository {
   Future<List<Article>> getNewsArticles() {
     return _newsDataProvider.fetchNewsArticles();
   }
+
+  Future<List<Article>> searchNewsArticles({required String queryText}) {
+    return _newsDataProvider.searchNewsArticles(queryText: queryText);
+  }
 }
