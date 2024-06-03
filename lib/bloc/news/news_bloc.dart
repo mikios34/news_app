@@ -15,6 +15,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
   NewsBloc() : super(NewsLoading()) {
     newsRepository = getIt.get<NewsRepository>();
     on<NewsLoad>(newsLoadHandler);
+    on<NewsSearch>(newsSearchHandler);
   }
 
   FutureOr<void> newsLoadHandler(
@@ -22,6 +23,18 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
     emit(NewsLoading());
     try {
       final articles = await newsRepository.getNewsArticles();
+      emit(NewsLoadSuccess(articles: articles));
+    } catch (_) {
+      emit(NewsOperationFailure());
+    }
+  }
+
+  FutureOr<void> newsSearchHandler(
+      NewsSearch event, Emitter<NewsState> emit) async {
+    emit(NewsLoading());
+    try {
+      final articles =
+          await newsRepository.searchNewsArticles(queryText: event.queryText);
       emit(NewsLoadSuccess(articles: articles));
     } catch (_) {
       emit(NewsOperationFailure());
