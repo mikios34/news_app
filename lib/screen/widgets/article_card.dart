@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/model/article.dart';
 import 'package:news_app/screen/article_detail_page.dart';
+import 'package:share_plus/share_plus.dart';
 // import 'package:share_plus/share_plus.dart';
 
 class ArticleCard extends StatelessWidget {
@@ -54,9 +55,9 @@ class ArticleCard extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      // Share.share(article.sourceUrl);
+                      Share.share(article.sourceUrl);
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.share,
                       size: 18,
                     ),
