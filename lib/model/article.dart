@@ -1,13 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-class Arthicle {
+class Article {
   final String title;
   final String imageUrl;
   final String source;
   final String sourceUrl;
   final String date;
-  Arthicle({
+  Article({
     required this.title,
     required this.imageUrl,
     required this.source,
@@ -15,8 +15,8 @@ class Arthicle {
     required this.date,
   });
 
-  factory Arthicle.fromMap(Map<String, dynamic> map) {
-    return Arthicle(
+  factory Article.fromMap(Map<String, dynamic> map) {
+    return Article(
       title: map['title'] as String,
       imageUrl: map['imageUrl'] as String,
       source: map['source'] as String,
@@ -25,6 +25,6 @@ class Arthicle {
     );
   }
 
-  factory Arthicle.fromJson(String source) =>
-      Arthicle.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Article.fromJson(String source) =>
+      Article.fromMap(json.decode(source) as Map<String, dynamic>);
 }
