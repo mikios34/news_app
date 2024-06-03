@@ -18,7 +18,7 @@ class Article {
     return Article(
       title: json['title'] as String,
       imageUrl: json['urlToImage'] as String,
-      source: json['author'] as String,
+      source: (json['author']??"") as String,
       sourceUrl: json['url'] as String,
       date: json['publishedAt'] as String,
     );
