@@ -47,20 +47,20 @@ class HomePage extends StatelessWidget {
                         context.read<NewsBloc>().add(NewsSearch(
                             queryText: _serachTextFieldController.text));
                       },
-                      icon: Icon(Icons.search)),
+                      icon: const Icon(Icons.search)),
                   contentPadding:
-                      EdgeInsets.symmetric(vertical: 3, horizontal: 16),
+                      const EdgeInsets.symmetric(vertical: 3, horizontal: 16),
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(width: 0.2)),
+                      borderSide: const BorderSide(width: 0.2)),
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(width: 0.2)),
+                      borderSide: const BorderSide(width: 0.2)),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(width: 0.2)),
+                      borderSide: const BorderSide(width: 0.2)),
                   hintText: "Search news...",
-                  hintStyle: TextStyle(fontWeight: FontWeight.w300)),
+                  hintStyle: const TextStyle(fontWeight: FontWeight.w300)),
             ),
           ),
         ),
