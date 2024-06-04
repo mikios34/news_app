@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-class Article {
+import 'package:equatable/equatable.dart';
+
+class Article extends Equatable {
   final String title;
   final String imageUrl;
   final String source;
@@ -16,11 +18,14 @@ class Article {
 
   factory Article.fromJson(Map<String, dynamic> json) {
     return Article(
-      title: json['title'] as String,
-      imageUrl: json['urlToImage'] as String,
-      source: (json['author']??"") as String,
-      sourceUrl: json['url'] as String,
-      date: json['publishedAt'] as String,
+      title: json['title'] ?? "",
+      imageUrl: json['urlToImage'] ?? "",
+      source: (json['author'] ?? ""),
+      sourceUrl: json['url'] ?? "",
+      date: json['publishedAt'] ?? "",
     );
   }
+
+  @override
+  List<Object?> get props => [title];
 }
