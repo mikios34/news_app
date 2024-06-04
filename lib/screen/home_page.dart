@@ -40,6 +40,7 @@ class HomePage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TextFormField(
+              key: const Key("searchField"),
               controller: _serachTextFieldController,
               decoration: InputDecoration(
                   suffix: IconButton(
@@ -71,7 +72,9 @@ class HomePage extends StatelessWidget {
             return ListView.builder(
                 itemCount: state.articles.length,
                 itemBuilder: (context, index) =>
-                    ArticleCard(article: state.articles[index]));
+                    ArticleCard(
+                      key: Key("articleCard$index"),
+                      article: state.articles[index]));
           }
           if (state is NewsOperationFailure) {
             return const Center(
