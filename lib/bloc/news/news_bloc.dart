@@ -23,7 +23,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
     emit(NewsLoading());
     try {
       final articles = await newsRepository.getNewsArticles();
-      emit(NewsLoadSuccess(articles: articles));
+      emit(NewsLoadSuccess(articles: articles, isSearch: false));
     } catch (_) {
       emit(NewsOperationFailure());
     }
@@ -35,7 +35,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
     try {
       final articles =
           await newsRepository.searchNewsArticles(queryText: event.queryText);
-      emit(NewsLoadSuccess(articles: articles));
+      emit(NewsLoadSuccess(articles: articles, isSearch: true));
     } catch (_) {
       emit(NewsOperationFailure());
     }
