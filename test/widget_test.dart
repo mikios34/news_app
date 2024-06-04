@@ -77,8 +77,9 @@ void main() {
         (WidgetTester tester) async {
       whenListen<NewsState>(
         mockNewsBloc,
-        Stream<NewsState>.fromIterable([NewsLoadSuccess(articles: articles)]),
-        initialState: NewsLoadSuccess(articles: articles),
+        Stream<NewsState>.fromIterable(
+            [NewsLoadSuccess(articles: articles, isSearch: false)]),
+        initialState: NewsLoadSuccess(articles: articles, isSearch: false),
       );
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pump();

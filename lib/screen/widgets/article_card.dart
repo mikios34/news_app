@@ -12,12 +12,17 @@ class ArticleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  ArticleDetailPage(articleUrl: article.sourceUrl),
-            ));
+        if (article.sourceUrl.isNotEmpty) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    ArticleDetailPage(articleUrl: article.sourceUrl),
+              ));
+        } else {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text("Article removed.")));
+        }
       },
       child: Container(
         padding: const EdgeInsets.all(16.0),
@@ -27,6 +32,12 @@ class ArticleCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(8.0),
               child: FadeInImage.assetNetwork(
                 placeholder: 'assets/images/placeholder.png',
+                imageErrorBuilder: (context, error, stackTrace) => Image.asset(
+                  'assets/images/placeholder.png',
+                  width: 100.0,
+                  height: 100.0,
+                  fit: BoxFit.cover,
+                ),
                 image: article.imageUrl,
                 width: 100.0,
                 height: 100.0,

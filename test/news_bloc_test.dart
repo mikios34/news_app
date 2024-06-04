@@ -28,7 +28,8 @@ void main() {
       wait: Duration(seconds: 5),
       build: () => NewsBloc(),
       act: (bloc) => bloc.add(NewsLoad()),
-      expect: () => [NewsLoading(), NewsLoadSuccess(articles: articles)],
+      expect: () =>
+          [NewsLoading(), NewsLoadSuccess(articles: articles, isSearch: false)],
     );
 
     blocTest<NewsBloc, NewsState>(
@@ -40,7 +41,8 @@ void main() {
       wait: Duration(seconds: 5),
       build: () => NewsBloc(),
       act: (bloc) => bloc.add(NewsSearch(queryText: 'biden')),
-      expect: () => [NewsLoading(), NewsLoadSuccess(articles: articles)],
+      expect: () =>
+          [NewsLoading(), NewsLoadSuccess(articles: articles, isSearch: true)],
     );
   });
 
