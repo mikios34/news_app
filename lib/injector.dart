@@ -6,6 +6,9 @@ import 'package:http/http.dart' as http;
 final getIt = GetIt.instance;
 
 setupInjector() {
-  getIt.registerSingleton<NewsRepository>(
-      NewsRepository(NewsDataProvider(httpClient: http.Client())));
+  bool isRegistered = getIt.isRegistered<NewsRepository>();
+  if (!isRegistered) {
+    getIt.registerSingleton<NewsRepository>(
+        NewsRepository(NewsDataProvider(httpClient: http.Client())));
+  }
 }
