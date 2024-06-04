@@ -8,10 +8,13 @@ class HomePage extends StatelessWidget {
   HomePage({super.key});
   final _serachTextFieldController = TextEditingController();
 
+  bool showClearIcon = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 1,
         title: const Text("News Demo "),
         actions: [
           PopupMenuButton(
@@ -34,11 +37,22 @@ class HomePage extends StatelessWidget {
               PopupMenuItem(value: 2, child: Text("System"))
             ],
           ),
+          BlocBuilder<NewsBloc, NewsState>(
+              builder: (context, state) =>
+                  (state is NewsLoadSuccess && state.isSearch)
+                      ? IconButton(
+                          onPressed: () {
+                            FocusManager.instance.primaryFocus!.unfocus();
+                            _serachTextFieldController.clear();
+                            context.read<NewsBloc>().add(NewsLoad());
+                          },
+                          icon: const Icon(Icons.clear_all))
+                      : const SizedBox.shrink())
         ],
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
+          preferredSize: const Size.fromHeight(70),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
             child: TextFormField(
               key: const Key("searchField"),
               controller: _serachTextFieldController,
@@ -47,6 +61,7 @@ class HomePage extends StatelessWidget {
                       onPressed: () {
                         context.read<NewsBloc>().add(NewsSearch(
                             queryText: _serachTextFieldController.text));
+                        showClearIcon = true;
                       },
                       icon: const Icon(Icons.search)),
                   contentPadding:
@@ -71,10 +86,9 @@ class HomePage extends StatelessWidget {
           if (state is NewsLoadSuccess) {
             return ListView.builder(
                 itemCount: state.articles.length,
-                itemBuilder: (context, index) =>
-                    ArticleCard(
-                      key: Key("articleCard$index"),
-                      article: state.articles[index]));
+                itemBuilder: (context, index) => ArticleCard(
+                    key: Key("articleCard$index"),
+                    article: state.articles[index]));
           }
           if (state is NewsOperationFailure) {
             return const Center(
