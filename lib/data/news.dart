@@ -14,7 +14,7 @@ class NewsDataProvider {
       'https://newsapi.org/v2/top-headlines?country=us';
 
   Future<List<Article>> fetchNewsArticles() async {
-    final response = await http.get(Uri.parse('$_baseUrl&apiKey=$_apiKey'));
+    final response = await httpClient.get(Uri.parse('$_baseUrl&apiKey=$_apiKey'));
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body)['articles'] as List<dynamic>;
@@ -26,7 +26,7 @@ class NewsDataProvider {
 
   Future<List<Article>> searchNewsArticles({required String queryText}) async {
     final response =
-        await http.get(Uri.parse('$_baseUrl&apiKey=$_apiKey&q=$queryText'));
+        await httpClient.get(Uri.parse('$_baseUrl&apiKey=$_apiKey&q=$queryText'));
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body)['articles'] as List<dynamic>;
