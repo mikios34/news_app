@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,76 +10,115 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group("Theme test -", () {
-    testWidgets("Theme Switch test.", (widgetTester) async {
+    testWidgets("Theme Switch test.", (tester) async {
       app.main();
 
-      await widgetTester.pump();
-      await widgetTester.idle();
-      await widgetTester.pumpAndSettle();
+      await tester.pumpAndSettle();
+      await tester.idle();
 
       final popupMenu = find.byIcon(Icons.more_vert);
+      expect(popupMenu, findsOneWidget);
 
-      await widgetTester.ensureVisible(popupMenu);
-      await widgetTester.tap(popupMenu);
-      await widgetTester.pumpAndSettle();
+      await tester.tap(popupMenu);
+      await tester.pumpAndSettle();
       final themeMode = find.text("Dark");
+      expect(themeMode, findsOneWidget);
 
-      await widgetTester.ensureVisible(themeMode);
-      await widgetTester.tap(themeMode);
-      await widgetTester.pumpAndSettle();
-      sleep(Duration(seconds: 5));
+      await tester.tap(themeMode);
+      await tester.pumpAndSettle();
+      await Future.delayed(Duration(seconds: 5));
 
-      await widgetTester.tap(popupMenu);
-      await widgetTester.pumpAndSettle();
+      await tester.tap(popupMenu);
+      await tester.pumpAndSettle();
       final themeMode2 = find.text("Light");
+      expect(themeMode2, findsOneWidget);
 
-      await widgetTester.ensureVisible(themeMode2);
-      await widgetTester.tap(themeMode2);
-      await widgetTester.pumpAndSettle();
-      sleep(Duration(seconds: 5));
+      await tester.tap(themeMode2);
+      await tester.pumpAndSettle();
+      await Future.delayed(Duration(seconds: 5));
 
-      await widgetTester.tap(popupMenu);
-      await widgetTester.pumpAndSettle();
+      await tester.tap(popupMenu);
+      await tester.pumpAndSettle();
       final themeMode3 = find.text("System");
+      expect(themeMode3, findsOneWidget);
 
-      await widgetTester.ensureVisible(themeMode3);
-      await widgetTester.tap(themeMode3);
-      await widgetTester.pumpAndSettle();
-
-      // sleep(Duration(seconds: 10));
+      await tester.tap(themeMode3);
+      await tester.pumpAndSettle();
+      await Future.delayed(Duration(seconds: 5));
     });
   });
-
   group("News Test", () {
-    testWidgets("Search News test", (widgetTester) async {
+    testWidgets("Test article detail page and article share.", (tester) async {
       app.main();
 
-      await widgetTester.pump();
-      await widgetTester.idle();
-      await widgetTester.pumpAndSettle();
+      await tester.pumpAndSettle();
+      await tester.idle();
 
-      final searchField = find.byKey(Key("searchField"));
-      await widgetTester.pumpAndSettle();
+      final shareIcon = find.byIcon(Icons.share);
+      expect(shareIcon, findsWidgets);
 
-      await widgetTester.ensureVisible(searchField);
-      await widgetTester.pumpAndSettle();
-
-      await widgetTester.tap(searchField);
-      await widgetTester.enterText(searchField, "Biden");
-
-      final searchButton = find.byIcon(Icons.search);
-
-      await widgetTester.tap(searchButton.first);
-      await widgetTester.pumpAndSettle();
+      await tester.tap(shareIcon.first);
+      await tester.pumpAndSettle();
+      await Future.delayed(Duration(seconds: 5));
 
       final articleCard = find.byKey(Key("articleCard0"));
-      await widgetTester.ensureVisible(articleCard);
-      await widgetTester.pumpAndSettle();
+      expect(articleCard, findsOneWidget);
 
-      await widgetTester.tap(articleCard);
-      await widgetTester.pumpAndSettle();
-      // sleep(Duration(seconds: 10));
-      widgetTester.pageBack();
+      await tester.tap(articleCard);
+      await tester.pumpAndSettle();
+
+      await Future.delayed(Duration(seconds: 25));
+      final webView = find.byKey(Key("articleDetail"));
+      expect(webView, findsOneWidget);
+    });
+
+    testWidgets("Search News test", (tester) async {
+      app.main();
+
+      await tester.pumpAndSettle();
+      await tester.idle();
+
+      final searchField = find.byKey(Key('searchField'));
+      expect(searchField, findsOneWidget);
+
+      await tester.ensureVisible(searchField);
+      await tester.pumpAndSettle();
+
+      await tester.tap(searchField);
+      await tester.enterText(searchField, 'Biden');
+      await tester.pumpAndSettle();
+
+      final searchButton = find.byIcon(Icons.search);
+      await tester.tap(searchButton.first);
+      await tester.pumpAndSettle();
+
+      // Wait for a few seconds to simulate the search
+      await Future.delayed(Duration(seconds: 5));
+
+      final articleCard = find.byKey(Key("articleCard0"));
+      expect(articleCard, findsOneWidget);
+
+      await tester.tap(articleCard);
+      await tester.pumpAndSettle();
+
+      await Future.delayed(Duration(seconds: 25));
+
+      final webView = find.byKey(Key("articleDetail"));
+      expect(webView, findsOneWidget);
+
+      final backButton = find.byIcon(Icons.arrow_back_ios_new);
+      expect(backButton, findsOneWidget);
+      await tester.tap(backButton);
+      await tester.pumpAndSettle();
+
+      final clearIcon = find.byIcon(Icons.clear_all);
+      await tester.tap(clearIcon);
+      await tester.pumpAndSettle();
+
+      await Future.delayed(Duration(seconds: 10));
+
+      // Expect news loaded after search is cleared
+      expect(articleCard, findsOneWidget);
     });
   });
 }
