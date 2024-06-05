@@ -16,8 +16,11 @@ class ArticleCard extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    ArticleDetailPage(articleUrl: article.sourceUrl),
+                builder: (context) => ArticleDetailPage(
+                  key: Key("articleDetail"),
+                  articleUrl: article.sourceUrl,
+                  articleTitle: article.title,
+                ),
               ));
         } else {
           ScaffoldMessenger.of(context)

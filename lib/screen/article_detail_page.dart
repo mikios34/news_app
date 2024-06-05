@@ -3,7 +3,9 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class ArticleDetailPage extends StatefulWidget {
   final String articleUrl;
-  const ArticleDetailPage({required this.articleUrl, super.key});
+  final String articleTitle;
+  const ArticleDetailPage(
+      {required this.articleTitle, required this.articleUrl, super.key});
 
   @override
   State<ArticleDetailPage> createState() => _ArticleDetailPageState();
@@ -34,6 +36,15 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back_ios_new),
+        ),
+        title: Text(widget.articleTitle),
+      ),
       body: WebViewWidget(
         controller: controller,
       ),
