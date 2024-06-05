@@ -27,16 +27,12 @@ void main() {
       mockNewsBloc = MockNewsBloc();
       mockThemeCubit = MockThemeCubit();
 
-      // Ensure initial state for NewsBloc
-      // when(mockNewsBloc.state).thenReturn(NewsLoading());
       whenListen<NewsState>(
         mockNewsBloc,
         Stream<NewsState>.fromIterable([NewsLoading()]),
         initialState: NewsLoading(),
       );
 
-      // Ensure initial state for ThemeCubit
-      // when(mockThemeCubit.state).thenReturn(ThemeState(ThemeMode.system));
       whenListen<ThemeState>(
         mockThemeCubit,
         Stream<ThemeState>.fromIterable([ThemeState(ThemeMode.system)]),
@@ -50,9 +46,9 @@ void main() {
           BlocProvider<NewsBloc>(
             create: (context) => mockNewsBloc,
           ),
-          // BlocProvider<ThemeCubit>(
-          //   create: (context) => mockThemeCubit,
-          // ),
+          BlocProvider<ThemeCubit>(
+            create: (context) => mockThemeCubit,
+          ),
         ],
         child: MaterialApp(
           theme: lightTheme,
@@ -105,20 +101,10 @@ void main() {
 
     testWidgets('toggles theme mode when selected from PopupMenuButton',
         (WidgetTester tester) async {
-      // whenListen(
-      //   mockNewsBloc,
-      //   Stream<NewsState>.fromIterable([NewsLoading()]),
-      //   initialState: NewsLoading(),
-      // );
       await tester.pumpWidget(createWidgetUnderTest());
 
-      // await tester.pumpAndSettle();
       expect(find.byIcon(Icons.more_vert), findsOneWidget);
       await tester.tap(find.byIcon(Icons.more_vert));
-      // expect(find.text("Light"), findsOneWidget);
-
-      // await tester.tap(find.text('Dark'));
-      // verify(mockThemeCubit.toggleTheme(ThemeMode.dark)).called(1);
     });
 
     testWidgets('searches news when search icon is pressed',
@@ -128,8 +114,6 @@ void main() {
       await tester.enterText(find.byType(TextFormField), 'flutter');
       await tester.tap(find.byIcon(Icons.search));
       await tester.pump();
-
-      // verify(mockNewsBloc.add(NewsSearch(queryText: 'flutter'))).called(1);
     });
   });
 }
