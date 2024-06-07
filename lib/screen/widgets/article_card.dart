@@ -31,22 +31,24 @@ class ArticleCard extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: FadeInImage.assetNetwork(
-                placeholder: 'assets/images/placeholder.png',
-                imageErrorBuilder: (context, error, stackTrace) => Image.asset(
-                  'assets/images/placeholder.png',
+            if (article.imageUrl.isNotEmpty)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: FadeInImage.assetNetwork(
+                  placeholder: 'assets/images/placeholder.png',
+                  image: article.imageUrl,
                   width: 100.0,
                   height: 100.0,
                   fit: BoxFit.cover,
                 ),
-                image: article.imageUrl,
+              )
+            else
+              Image.asset(
+                'assets/images/placeholder.png',
                 width: 100.0,
                 height: 100.0,
                 fit: BoxFit.cover,
               ),
-            ),
             const SizedBox(width: 16.0),
             Expanded(
               child: Column(

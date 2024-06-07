@@ -33,6 +33,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  bdd_widget_test:
+    dependency: "direct dev"
+    description:
+      name: bdd_widget_test
+      sha256: a5acecd2eed66c12cb20fae0f664b64a35c82dd7cc103c15da6d460a62821112
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.6.4"
   bloc:
     dependency: transitive
     description:
@@ -209,6 +217,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.6"
+  diacritic:
+    dependency: transitive
+    description:
+      name: diacritic
+      sha256: "96db5db6149cbe4aa3cfcbfd170aca9b7648639be7e48025f9d458517f807fe4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.5"
   diff_match_patch:
     dependency: transitive
     description:
@@ -275,14 +291,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_gherkin:
-    dependency: "direct dev"
-    description:
-      name: flutter_gherkin
-      sha256: bacda3ef810e116bd66582d59ba58457e51e64977df0c1821e1a4f689bdf0186
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -322,14 +330,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.6.7"
-  gherkin:
-    dependency: transitive
-    description:
-      name: gherkin
-      sha256: "7c835be5c28dc50f753caa30b4d8e2204d0617dc56fc019dca0fc70279d779b7"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.8"
   glob:
     dependency: transitive
     description:
